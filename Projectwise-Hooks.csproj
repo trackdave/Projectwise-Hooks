@@ -70,9 +70,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Hooks.cs" />
-    <Compile Include="API.cs" />
     <Compile Include="ParamStructures.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PWAPI.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Steps to publish package to NuGet.txt" />

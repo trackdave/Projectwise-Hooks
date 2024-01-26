@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Projectwise_Hooks
 {
@@ -11,7 +7,7 @@ namespace Projectwise_Hooks
 	{
 		// For AAHOOK_LOGIN
 		[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-		public unsafe struct _AALOGIN_PARAM
+		public unsafe struct AALOGIN_PARAM
 		{
 			/// <summary>
 			/// [in] Reserved for future use.  Must be 0.
@@ -51,7 +47,7 @@ namespace Projectwise_Hooks
 
 		// For AAHOOK_CREATE_PROJECT
 		[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-		public unsafe struct _AAPROCREATE_PARAM
+		public unsafe struct AAPROCREATE_PARAM
 		{
 			// Reserved for future use.  Must be 0.
 			[MarshalAs(UnmanagedType.U4)]
@@ -122,5 +118,63 @@ namespace Projectwise_Hooks
 			[MarshalAs(UnmanagedType.U4)]
 			public uint projFlags;
 		}
+
+		[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+		public struct AaDocParam
+		{
+			public uint ulMask;
+			public int lProjectId;
+			public int lDocumentId;
+			public int lFileType;
+			public int lItemType;
+			public int lApplicationId;
+			public int lDepartmentId;
+			public string lpctstrFileName;
+			public string lpctstrName;
+			public string lpctstrDes;
+			public int lWorkspaceProfileId;
+			public Guid docGuid;
+			public uint itemFlagMask;
+			public uint itemFlags;
+			public string pMimeType;
+			public string pRevision;
+			public string pVersion;
+		}
+
+		[StructLayout(LayoutKind.Sequential)]
+		public struct AaDocItem
+		{
+			public int lProjectId;
+			public int lDocumentId;
+		};
+
+		[StructLayout(LayoutKind.Sequential)]
+		public struct AaDocumentsParam
+		{
+			//  Specifies valid fields mask, specifying whether fields ulFlags and lParam2 are valid or not. 
+			// [FieldOffset(0)]
+			public uint uiMask;
+			//  Specifies count of elements in the array specified by lpDocuments. 
+			//[FieldOffset(4)]
+			public int iCount;
+			//  A Pointer to the array of structures specifying the documents to be processed. 
+			//[FieldOffset(8)]
+			public AaDocItem lpDocuments;
+			//[MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 0)]
+			//public int[] lpDocuments;
+			//  Specifies first operation specific parameter. 
+			// [FieldOffset(12)]
+			public int iParam1;
+			//  Specifies operation specific mask. 
+			//[FieldOffset(16)]
+			public uint uiFlags;
+			//  Specifies second operation specific parameter. 
+			//[FieldOffset(20)]
+			public int iParam2;
+			//  Operation comment for audit trail. 
+			public string sComment;
+			//  Buffer of processed documents (type AADMSBUFFER_DOCUMENT). 
+			public IntPtr hProcessedDocuments;
+		};
 	}
 }
